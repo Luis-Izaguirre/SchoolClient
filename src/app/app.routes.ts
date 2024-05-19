@@ -7,6 +7,6 @@ import { LoginComponent } from './auth/login/login.component';
 export const routes: Routes = [
     { path: '', component:HomeComponent, pathMatch: 'full' },
     { path: 'course', component:CourseComponent },
-    { path: 'courseStudents/:id', component:StudentComponent },
+    { path: 'coursesStudents/:id', component:StudentComponent },
     { path: 'login', component:LoginComponent}
 ];

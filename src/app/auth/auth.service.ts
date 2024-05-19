@@ -14,6 +14,8 @@ export class AuthService {
   public _authStatus = new BehaviorSubject<boolean>(false)
   public authStatus = this._authStatus.asObservable();
   
+  constructor(protected http:HttpClient) { }
+  
   init(): void{
     if (this.isAuthenticated()) {
       this.setAuthStatus(true);
@@ -29,10 +31,9 @@ export class AuthService {
    return this.getToken() !== null;
   }
 
-  constructor(protected http:HttpClient) { }
   
   login (item: LoginRequest): Observable<LoginResult> {
-    let url = `${environment.baseUrl}api/Admin/Login`;
+    const url = `${environment.baseUrl}api/Admin/Login`;
     return this.http.post<LoginResult>(url, item) 
       .pipe(tap(loginResult => {
         if (loginResult.success) {
@@ -43,10 +44,23 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey)
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(this.tokenKey);
+    }
+    return null;
   }
-  logout(): void{
-    localStorage.removeItem(this.tokenKey);
-    this.setAuthStatus(false);
+
+  setToken(token: string): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(this.tokenKey, token);
+    }
   }
+
+   logout(): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(this.tokenKey);
+      this.setAuthStatus(false);
+    }
+  }
+  
 }

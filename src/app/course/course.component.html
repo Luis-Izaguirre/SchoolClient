@@ -9,16 +9,16 @@
         </tr>
     </thead>
     <tbody>
-        @for (course of course; track $index) {
+        @for (Course of course; track $index) {
             <tr>
                 <td>
-                    <a [routerLink] = "['/courseStudents',course.courseId]">
-                        {{ course.courseId }}
+                    <a [routerLink] = "['/coursesStudents', Course.courseId]">
+                        {{ Course.courseId }}
                     </a>
                 </td>
-                <td>{{ course.courseName }}</td>
-                <td>{{ course.courseDescription }}</td>
-                <td>{{ course.instructorName }}</td>
+                <td>{{ Course.courseName }}</td>
+                <td>{{ Course.courseDescription }}</td>
+                <td>{{ Course.instructorName }}</td>
             </tr>
         }
     </tbody>
